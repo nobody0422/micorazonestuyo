@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Razones + 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #16213e 70%, #0f0f23 100%);
+            color: #f5f5f7;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            min-height: 100vh;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(120, 119, 198, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            animation: gentleFlow 6s ease-in-out infinite;
+            letter-spacing: -2px;
+        }
+
+        @keyframes gentleFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: rgba(245, 245, 247, 0.8);
+            margin-bottom: 3rem;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Enhanced Floating Hearts */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatHeart 12s infinite ease-in-out;
+            filter: blur(0.5px);
+        }
+
+        .heart.purple {
+            color: #9d4edd;
+            text-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+        }
+
+        .heart.blue {
+            color: #4cc9f0;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+        }
+
+        .heart.indigo {
+            color: #7209b7;
+            text-shadow: 0 0 10px rgba(114, 9, 183, 0.5);
+        }
+
+        @keyframes floatHeart {
+            0% { 
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.8;
+                transform: translateY(95vh) scale(0.5) rotate(10deg);
+            }
+            15% {
+                opacity: 1;
+                transform: scale(1) rotate(-5deg);
+            }
+            85% {
+                opacity: 0.7;
+                transform: scale(0.8) rotate(5deg);
+            }
+            100% { 
+                transform: translateY(-10vh) scale(0) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Reasons Section */
+        .reasons-section {
+            display: none;
+            padding: 80px 0 120px;
+            position: relative;
+        }
+
+        .reasons-section.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #f5f5f7;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: rgba(245, 245, 247, 0.7);
+            font-weight: 300;
+        }
+
+        .reason-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 32px;
+            margin: 24px 0;
+            backdrop-filter: blur(40px);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reason-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+        }
+
+        .reason-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reason-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .reason-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .reason-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .reason-text {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: rgba(245, 245, 247, 0.9);
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        /* Enhanced Special Reason */
+        .special-reason {
+            background: rgba(157, 78, 221, 0.08) !important;
+            border: 1px solid rgba(157, 78, 221, 0.3) !important;
+            animation: specialGlow 3s ease-in-out infinite alternate;
+            margin: 40px 0;
+        }
+
+        .special-reason .reason-number {
+            background: linear-gradient(135deg, #9d4edd, #7209b7);
+            width: 64px;
+            height: 64px;
+            font-size: 1.8rem;
+            border-radius: 20px;
+            animation: gentlePulse 2s ease-in-out infinite;
+        }
+
+        .special-reason .reason-text {
+            font-size: 1.3rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, #9d4edd, #4cc9f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes specialGlow {
+            0% { box-shadow: 0 0 30px rgba(157, 78, 221, 0.2); }
+            100% { box-shadow: 0 0 50px rgba(157, 78, 221, 0.4); }
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Enhanced Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2, #9d4edd);
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Enhanced Navigation */
+        .nav {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 12px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav.visible {
+            opacity: 1;
+        }
+
+        .nav-text {
+            color: rgba(245, 245, 247, 0.8);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+                padding: 0 10px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .reason-card {
+                padding: 24px 20px;
+                margin: 20px 0;
+            }
+            
+            .reason-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .reason-text {
+                font-size: 1.1rem;
+            }
+            
+            .nav {
+                top: 16px;
+                right: 16px;
+                padding: 10px 16px;
+            }
+        }
+
+        /* Fade in animation */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #9d4edd);
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div class="nav" id="nav">
+        <span class="nav-text" id="navText">0 / 101</span>
+    </div>
+
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Para Ti 💕</h1>
+            <p class="hero-subtitle">100 razones para no alejarnos<br>+ 1 razón para durar toda la vida</p>
+            <button class="cta-button" onclick="startJourney()">
+                Comenzar este viaje ✨
+            </button>
+        </div>
+    </section>
+
+    <section class="reasons-section" id="reasonsSection">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestras Razones</h2>
+                <p class="section-description">Cada una escrita desde el corazón</p>
+            </div>
+            <div id="reasonsContainer"></div>
+        </div>
+    </section>
+
+    <script>
+        // Enhanced Hearts system
+        function createHearts() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            const heartSymbols = ['💜', '💙', '🤍', '💖', '💝'];
+            const colors = ['purple', 'blue', 'indigo'];
+            
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = `heart ${colors[Math.floor(Math.random() * colors.length)]}`;
+                    heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 12 + 's';
+                    heart.style.animationDuration = (Math.random() * 4 + 10) + 's';
+                    heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                    
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.remove();
+                        }
+                    }, 15000);
+                }, i * 2000);
+            }
+        }
+
+        // Start hearts immediately
+        createHearts();
+        setInterval(createHearts, 15000);
+
+        // Reasons data
+        const reasons = [
+            "Porque tu sonrisa ilumina mis días más oscuros",
+            "Porque en tus ojos encuentro mi hogar",
+            "Porque tus abrazos son mi lugar seguro",
+            "Porque me haces reír incluso cuando no quiero sonreír",
+            "Porque tu voz es mi canción favorita",
+            "Porque contigo el tiempo se detiene",
+            "Porque me inspiras a ser mejor persona cada día",
+            "Porque tu presencia hace que todo tenga sentido",
+            "Porque me amas con todos mis defectos",
+            "Porque juntos somos invencibles",
+            "Porque tus besos son mi debilidad favorita",
+            "Porque me escuchas cuando nadie más lo hace",
+            "Porque tu risa es contagiosa",
+            "Porque me apoyas en mis sueños más locos",
+            "Porque contigo descubrí el verdadero amor",
+            "Porque tu corazón es el más hermoso que conozco",
+            "Porque me haces sentir especial todos los días",
+            "Porque tu paciencia es infinita conmigo",
+            "Porque compartimos los mismos sueños",
+            "Porque tu bondad no conoce límites",
+            "Porque me complementas perfectamente",
+            "Porque tu amor me da fuerzas",
+            "Porque juntos creamos momentos inolvidables",
+            "Porque tu inteligencia me fascina",
+            "Porque me haces creer en los cuentos de hadas",
+            "Porque tu cariño cura todas mis heridas",
+            "Porque eres mi mejor amiga y mi gran amor",
+            "Porque tu personalidad es única y especial",
+            "Porque me das paz en medio del caos",
+            "Porque tu amor es incondicional",
+            "Porque juntos podemos conquistar el mundo",
+            "Porque tu alegría es contagiosa",
+            "Porque me haces ver la belleza en las pequeñas cosas",
+            "Porque tu corazón es generoso y puro",
+            "Porque contigo aprendí a amar de verdad",
+            "Porque tu comprensión me tranquiliza",
+            "Porque eres mi motivación diaria",
+            "Porque tu ternura derrite mi corazón",
+            "Porque me haces sentir el más afortunado del mundo",
+            "Porque tu amor me transforma",
+            "Porque juntos formamos el equipo perfecto",
+            "Porque tu creatividad me sorprende siempre",
+            "Porque me das esperanza en los días difíciles",
+            "Porque tu fidelidad es inquebrantable",
+            "Porque contigo descubrí mi mejor versión",
+            "Porque tu confianza en mí me fortalece",
+            "Porque eres mi refugio en las tormentas",
+            "Porque tu amor me hace valiente",
+            "Porque compartimos una conexión única",
+            "Porque tu sabiduría me guía",
+            "Porque me haces reír hasta llorar",
+            "Porque tu presencia es mi regalo favorito",
+            "Porque juntos escribimos la historia más bella",
+            "Porque tu corazón late al ritmo del mío",
+            "Porque me enseñas algo nuevo cada día",
+            "Porque tu amor es mi inspiración",
+            "Porque contigo el futuro se ve brillante",
+            "Porque tu dulzura endulza mi vida",
+            "Porque me aceptas tal como soy",
+            "Porque tu amor me sana",
+            "Porque juntos somos imparables",
+            "Porque tu pasión por la vida me contagia",
+            "Porque me das razones para levantarme cada mañana",
+            "Porque tu lealtad es inquebrantable",
+            "Porque contigo descubrí qué es la felicidad",
+            "Porque tu amor me da alas para volar",
+            "Porque eres mi sueño hecho realidad",
+            "Porque tu comprensión no tiene límites",
+            "Porque me haces creer en los milagros",
+            "Porque tu amor es mi fortaleza",
+            "Porque juntos creamos magia",
+            "Porque tu corazón es mi tesoro más preciado",
+            "Porque me das valentía para enfrentar todo",
+            "Porque tu amor es eterno",
+            "Porque contigo aprendí el verdadero significado de la vida",
+            "Porque tu belleza interior me deslumbra",
+            "Porque me haces sentir completo",
+            "Porque tu amor es mi salvación",
+            "Porque juntos superamos cualquier obstáculo",
+            "Porque tu ternura me derrite",
+            "Porque me das paz interior",
+            "Porque tu amor es mi medicina",
+            "Porque contigo todo es posible",
+            "Porque tu corazón es mi hogar",
+            "Porque me haces mejor persona",
+            "Porque tu amor me libera",
+            "Porque juntos somos eternos",
+            "Porque tu sonrisa es mi sol",
+            "Porque me das esperanza",
+            "Porque tu amor es mi oxígeno",
+            "Porque contigo soy completamente feliz",
+            "Porque tu corazón y el mío son uno solo",
+            "Porque me das sentido a la existencia",
+            "Porque tu amor trasciende el tiempo",
+            "Porque juntos creamos nuestro propio paraíso",
+            "Porque tu alma gemela soy yo",
+            "Porque me amas sin condiciones",
+            "Porque tu amor me eleva",
+            "Porque contigo descubrí la eternidad",
+            "Porque tu corazón es mi universo",
+            "Porque me das toda tu vida sin pedirme nada",
+            "Porque tu amor es infinito como las estrellas"
+        ];
+
+        const specialReason = "Porque fuiste creada especialmente para mí, y yo para ti. Porque nuestro amor está escrito en las estrellas y durará por toda la eternidad. Eres mi alma gemela, mi complemento perfecto, y la razón por la que mi corazón late. Contigo encontré no solo el amor de mi vida, sino mi vida misma. Esta es nuestra razón para siempre. 💖✨";
+
+        let currentReason = 0;
+        let isAnimating = false;
+
+        function startJourney() {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            document.getElementById('hero').style.transform = 'translateY(-100vh)';
+            document.getElementById('hero').style.transition = 'transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            
+            setTimeout(() => {
+                document.getElementById('hero').style.display = 'none';
+                document.getElementById('reasonsSection').classList.add('active');
+                document.getElementById('nav').classList.add('visible');
+                showReason();
+                isAnimating = false;
+            }, 1200);
+        }
+
+        function showReason() {
+            if (currentReason >= reasons.length) {
+                showSpecialReason();
+                return;
+            }
+
+            const reasonsContainer = document.getElementById('reasonsContainer');
+            const reasonCard = document.createElement('div');
+            reasonCard.className = 'reason-card';
+            
+            reasonCard.innerHTML = `
+                <div class="reason-header">
+                    <div class="reason-number">${currentReason + 1}</div>
+                    <div class="reason-text">${reasons[currentReason]}</div>
+                </div>
+            `;
+            
+            reasonsContainer.appendChild(reasonCard);
+            
+            // Intersection Observer for smooth animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { 
+                threshold: 0.2,
+                rootMargin: '50px'
+            });
+            
+            observer.observe(reasonCard);
+            
+            // Update progress
+            updateProgress();
+            
+            currentReason++;
+            
+            // Continue showing reasons with a smoother pace
+            setTimeout(showReason, 2000);
+            
+            // Smooth scroll
+            setTimeout(() => {
+                reasonCard.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 300);
+        }
+
+        function showSpecialReason() {
+            const reasonsContainer = document.getElementById('reasonsContainer');
+            const specialCard = document.createElement('div');
+            specialCard.className = 'reason-card special-reason';
+            
+            specialCard.innerHTML = `
+                <div class="reason-header">
+                    <div class="reason-number">💖</div>
+                    <div class="reason-text">
+                        <strong>LA RAZÓN PARA TODA LA VIDA:</strong><br><br>
+                        ${specialReason}
+                    </div>
+                </div>
+            `;
+            
+            reasonsContainer.appendChild(specialCard);
+            
+            setTimeout(() => {
+                specialCard.classList.add('visible');
+                specialCard.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 800);
+            
+            updateProgress(true);
+        }
+
+        function updateProgress(complete = false) {
+            const progress = complete ? 100 : ((currentReason) / (reasons.length + 1)) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('navText').textContent = `${currentReason} / 101`;
+        }
+
+        // Performance optimizations
+        let ticking = false;
+
+        function updateOnScroll() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', updateOnScroll, { passive: true });
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
